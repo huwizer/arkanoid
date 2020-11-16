@@ -1,35 +1,51 @@
 import pygame,time,settings as set
-krug=[set.RADIUS,set.RADIUS]
+krug=pygame.Rect(100,100,set.RADIUS*2,set.RADIUS*2)
 ne_krug=pygame.Rect(50,600,250,10)
 pygame.init()
 window=pygame.display.set_mode([set.SCREEN_WIDTH,set.SCREEN_HEIGHT])
-speedx=10
-speedy=10
+speedx=0
+speedy=3
 
 while True:
 
 
     krug[0]+=speedx
-    krug[1]+=speedy
 
-    if krug[0]>set.SCREEN_WIDTH-set.RADIUS:
-        krug[0]=set.SCREEN_WIDTH-set.RADIUS
+
+    if krug.right>set.SCREEN_WIDTH:
+        krug.right=set.SCREEN_WIDTH
         speedx=-10
 
-    if krug[0] < set.RADIUS:
-        krug[0]=set.RADIUS
+    if krug.x < 0:
+        krug.x=0
         speedx = 10
 
-    if krug[1]>set.SCREEN_HEIGHT-set.RADIUS:
-        krug[1] = set.SCREEN_HEIGHT-set.RADIUS
+
+    krug.top += speedy
+
+
+    if krug.bottom>set.SCREEN_HEIGHT:
+        krug.bottom = set.SCREEN_HEIGHT
         speedy=-10
 
-    if krug[1]< set.RADIUS:
-        krug[1]=set.RADIUS
+    if krug.y< 0:
+        krug.y=0
         speedy=10
 
-    pygame.draw.circle(window, [255, 246, 18], krug, set.RADIUS)
+    if ne_krug.colliderect(krug)==1 and speedy>0:
+        krug.bottom=ne_krug.top
+        speedy=-10
+    elif ne_krug.colliderect(krug)==1 and speedy<0:
+        krug.top = ne_krug.bottom
+        speedy = 10
+
+
+
+
+
     pygame.draw.rect(window,[255, 246, 18],ne_krug)
+    # pygame.draw.rect(window,[255, 246, 18],krug)
+    pygame.draw.circle(window,[33,55,77],krug.center,set.RADIUS)
 
     time.sleep(1 / 60)
     pygame.display.flip()
