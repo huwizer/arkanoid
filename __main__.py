@@ -1,15 +1,15 @@
 import pygame,time,settings as set
-krug=pygame.Rect(100,100,set.RADIUS*2,set.RADIUS*2)
-ne_krug=pygame.Rect(50,600,250,10)
+krug=pygame.Rect(600,600,set.RADIUS*2,set.RADIUS*2)
+ne_krug=pygame.Rect(100,600,250,10)
 pygame.init()
 window=pygame.display.set_mode([set.SCREEN_WIDTH,set.SCREEN_HEIGHT])
-speedx=0
-speedy=3
+speedx=10
+speedy=10
 
 while True:
 
 
-    krug[0]+=speedx
+    krug.x+=speedx
 
 
     if krug.right>set.SCREEN_WIDTH:
@@ -19,6 +19,14 @@ while True:
     if krug.x < 0:
         krug.x=0
         speedx = 10
+
+    if ne_krug.colliderect(krug)==1 and speedx>0:
+        krug.right=ne_krug.x
+        speedx=-10
+    elif ne_krug.colliderect(krug)==1 and speedx<0:
+        krug.x=ne_krug.right
+        speedx=10
+
 
 
     krug.top += speedy
@@ -38,6 +46,7 @@ while True:
     elif ne_krug.colliderect(krug)==1 and speedy<0:
         krug.top = ne_krug.bottom
         speedy = 10
+
 
 
 
