@@ -14,7 +14,6 @@ while True:
     ev=event.get()
 
     for e in ev:
-        print(e)
 
         if e.type==pygame.QUIT:
             exit()
