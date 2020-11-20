@@ -1,14 +1,34 @@
 import pygame,time,settings as set
+from pygame import display,event,draw
 krug=pygame.Rect(600,600,set.RADIUS*2,set.RADIUS*2)
 ne_krug=pygame.Rect(100,600,250,10)
 pygame.init()
-window=pygame.display.set_mode([set.SCREEN_WIDTH,set.SCREEN_HEIGHT])
+window=display.set_mode([set.SCREEN_WIDTH,set.SCREEN_HEIGHT])
 speedx=10
 speedy=10
 
 while True:
 
+    #Обработка событий
 
+    ev=event.get()
+
+    for e in ev:
+        print(e)
+
+        if e.type==pygame.QUIT:
+            exit()
+
+        if e.type==pygame.KEYDOWN and e.key==pygame.K_LEFT:
+            ne_krug.x-=3
+
+
+
+
+
+
+
+    #Движение круга и отбивка по x
     krug.x+=speedx
 
 
@@ -28,7 +48,7 @@ while True:
         speedx=10
 
 
-
+    #Движение круга и отбивка по y
     krug.top += speedy
 
 
@@ -52,12 +72,17 @@ while True:
 
 
 
-    pygame.draw.rect(window,[255, 246, 18],ne_krug)
-    # pygame.draw.rect(window,[255, 246, 18],krug)
-    pygame.draw.circle(window,[33,55,77],krug.center,set.RADIUS)
+
+
+
+
+
+    draw.rect(window,[255, 246, 18],ne_krug)
+    # draw.rect(window,[255, 246, 18],krug)
+    draw.circle(window,[33,55,77],krug.center,set.RADIUS)
 
     time.sleep(1 / 60)
-    pygame.display.flip()
-    pygame.event.get()
+    display.flip()
+
     window.fill([138,21,255])
 
