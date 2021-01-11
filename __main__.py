@@ -5,8 +5,8 @@ window=display.set_mode([set.SCREEN_WIDTH,set.SCREEN_HEIGHT])
 #Подготовка управления
 key.set_repeat(75)
 #Подготовка модели
-speedx=5
-speedy=5
+speedx=0
+speedy=0
 krug=pygame.Rect(600,600,set.RADIUS*2,set.RADIUS*2)
 ne_krug=pygame.Rect(100,600,250,10)
 
@@ -38,10 +38,31 @@ while True:
             if ne_krug.right>set.SCREEN_WIDTH:
                 ne_krug.right=set.SCREEN_WIDTH
 
+        #управление платформой
+        if e.type==pygame.MOUSEMOTION:
+            if ne_krug.x<krug.x:
+                sleva=True
+            else:
+                sleva=False
+            print(e.pos)
+            ne_krug.centerx=e.pos[0]
 
+            if sleva==True:
+                if ne_krug.colliderect(krug) == 1:
+                    ne_krug.right = krug.x
+            if sleva==False:
+                if ne_krug.colliderect(krug) == 1:
+                    ne_krug.x = krug.right
 
+            #if ne_krug.colliderect(krug) == 1 and ne_krug.x<krug.right:
+                #ne_krug.x = krug.right
+            # if ne_krug.colliderect(krug) == 1:
+            #     ne_krug.right = krug.x
 
-
+            if ne_krug.x < 0:
+                ne_krug.x = 0
+            if ne_krug.right > set.SCREEN_WIDTH:
+                ne_krug.right = set.SCREEN_WIDTH
 
 
     #Движение круга и отбивка по x
